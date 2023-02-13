@@ -1,0 +1,13 @@
+.project-icon {
+    content: url("/public/ico/project3.png");
+    width: 24px;
+    height: 24px;
+    opacity: 0.6;
+}
+
+.tasks-icon {
+    content: url("/public/ico/tasks.png");
+    width: 24px;
+    height: 24px;
+    opacity: 0.6;
+}
