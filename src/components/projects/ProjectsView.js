@@ -15,6 +15,9 @@ import { gql, useQuery } from "@apollo/client";
 
 import gqlClient, { callGqlQuery } from "../../services/gql-client";
 
+let selectedItem = null;
+let updateCounter = 0;
+
 const ProjectsView = () => {
 
     console.log("Start of ProjectsView")
@@ -34,11 +37,64 @@ const ProjectsView = () => {
     const [workItem, setWorkItem] = useState({});
     const [isToRefresh, setIsToRefresh] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const { loading, error, data} = useQuery(Get_Projects, {
+    const { loading, error, data, refetch } = useQuery(Get_Projects, {
         client: gqlClient,
+        onCompleted: response => {
+
+            console.log("response from useQuery", response);
+
+            setListItems(response.project);
+
+            if(response.project.length > 0) {
+                
+                console.log("data.project.length", response.project.length);
+                console.log("data.project[0]", response.project[0]);
+        
+                if (selectedItem == null ) {
+                    setWorkItem(response.project[0]);
+                    setSelectedListItem(response.project[0]);
+                } else {
+                    updateCounter++;
+                    setWorkItem(selectedItem);
+                    setSelectedListItem(selectedItem);
+                }
+
+                setDetailsMode("VIEW2");
+        
+                console.log("selected item from get entity items", selectedListItem);  
+            }
+
+            setIsToRefresh(false);
+        }
     })
 
+    console.log("data from ProjectsView", data)
 
+    console.log("refetch", refetch)
+
+    
+
+    if(loading) {
+        return "Loading...";        
+    } 
+    
+    if (error){
+        return error;
+    }
+
+    // setListItems(data.project);
+
+    if(data.project.length > 0) {
+        console.log("data.project.length", data.project.length);
+        console.log("data.project[0]", data.project[0]);
+
+        // setWorkItem(data.project[0]);
+        // setSelectedListItem(data.project[0]);
+        // setDetailsMode("VIEW2");
+
+        console.log("selected item from get entity items", selectedListItem);            
+    }
+    // setIsToRefresh(false);
 
     // callGqlQuery(Get_Projects);
     // gqlClient.query({
@@ -49,63 +105,68 @@ const ProjectsView = () => {
 
 
 
-    const getList = () => {
+    // const getList = () => {
 
-        console.log("data from useQuery", data);
+    //     console.log("data from useQuery", data);
         
 
 
 
-        console.log("Get_Projects", Get_Projects);
+    //     console.log("Get_Projects", Get_Projects);
 
-        console.log("callGqlQuery", callGqlQuery)
+    //     console.log("callGqlQuery", callGqlQuery)
 
-        callGqlQuery(Get_Projects).then( (result) => {
+    //     callGqlQuery(Get_Projects).then( (result) => {
 
-            console.log("result from callGqlQuery call", result);
+    //         console.log("result from callGqlQuery call", result);
 
-            setListItems(result.data.project);
+    //         setListItems(result.data.project);
 
-            // const resultArr = [];
-            // result.data.project.forEach(element => {            
-            //     resultArr.push({
-            //         Id: element.id, 
-            //         Name: element.name
-            //     });
-            // });
-            // setListItems(resultArr);
-        }
-        )
-    }
 
-    // const getList = () => {
-    //     const options = {
-    //         "EntityName": entityName
+    //         // const resultArr = [];
+    //         // result.data.project.forEach(element => {            
+    //         //     resultArr.push({
+    //         //         Id: element.id, 
+    //         //         Name: element.name
+    //         //     });
+    //         // });
+    //         // setListItems(resultArr);
     //     }
-    //     getEntityItems(options).then((items) => {
-    //         setListItems(items);
-
-    //         console.log('listItems from getEntityItems', items);
-
-    //         if(items.length > 0){
-
-    //             console.log("items.length", items.length);
-    //             console.log("items[0]", items[0]);
-
-    //             setWorkItem(items[0]);
-    //             setSelectedListItem(items[0]);
-    //             setDetailsMode("VIEW");
-
-    //             console.log("selected item from get entity items", selectedListItem);                
-    //         }
-    //         setIsToRefresh(false);
-    //     });
+    //     )
     // }
 
-    useEffect(() => {
-        console.log("from useEffect")
-        getList();
-    }, []);
+    // const getList = () => {
+
+    // }
+
+    // // const getList = () => {
+    // //     const options = {
+    // //         "EntityName": entityName
+    // //     }
+    // //     getEntityItems(options).then((items) => {
+    // //         setListItems(items);
+
+    // //         console.log('listItems from getEntityItems', items);
+
+    // //         if(items.length > 0){
+
+    // //             console.log("items.length", items.length);
+    // //             console.log("items[0]", items[0]);
+
+    // //             setWorkItem(items[0]);
+    // //             setSelectedListItem(items[0]);
+    // //             setDetailsMode("VIEW");
+
+    // //             console.log("selected item from get entity items", selectedListItem);                
+    // //         }
+    // //         setIsToRefresh(false);
+    // //     });
+    // // }
+
+    // // useEffect(() => {
+    // //     console.log("from useEffect")
+    // //     getList();
+    // // }, []);
 
 
 
@@ -138,6 +199,7 @@ const ProjectsView = () => {
         console.log("event from onRowSelect", event);
         setSelectedListItem(event.data);
         setWorkItem(Object.assign({}, event.data));
+        selectedItem = event.data;
     };
 
     const onRowUnselect = (event) => {
@@ -148,21 +210,6 @@ const ProjectsView = () => {
     const onIndexTemplate = (data, props) => {
         return props.rowIndex + 1;
     }
-
-    // if (loading) {
-    //     return <p>
-    //         "Login..."
-    //     </p>;
-    // }
-
-    // if (error) {
-    //     return <p>
-    //         `Error! ${error.message}`;
-    //     </p>
-    // }
-
-    // console.log("data from gql", data);
-
 
     const leftToolbarSide = (
         <>
@@ -220,15 +267,19 @@ const ProjectsView = () => {
             </SplitterPanel>
             <SplitterPanel>
                 {workItem.name != null 
-                    ? 
+                    ? <>
+                        workItem.id: {workItem.id}
+                        detailsMode: { detailsMode } 
+                        updateCounter: { updateCounter }
                         <ProjectDetailView 
-                            key={workItem.id + detailsMode} 
+                            key={String(workItem.id) + String(detailsMode) + String(updateCounter)} 
                             item={workItem}
                             mode={detailsMode}
-                            getList={getList}
+                            refetch={refetch}
                             setSelectedListItem={setSelectedListItem}
                         >    
                         </ProjectDetailView>
+                        </>
                     : <h3>No Project Details</h3>
                 }
             </SplitterPanel>

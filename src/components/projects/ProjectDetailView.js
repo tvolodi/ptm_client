@@ -32,8 +32,10 @@ const ProjectDetailView = (props) => {
     console.log("props from ProjectDetailView", props)
     console.log("props.listItem from ProjectDetailView", props.item)
 
+    const entityItem = props.item;
+
     const [showMessage, setShowMessage] = useState(false);
-    const [formData, setFormData] = useState(props.item);
+    const [formData, setFormData] = useState(props.item);  
     const [isFormReadOnly, setIsFormReadOnly] = useState(() => {
         switch (props.mode){
             case "ADD":
@@ -78,17 +80,18 @@ const ProjectDetailView = (props) => {
         },
         onSubmit: async (data) => {
 
+            props.item.name = data.name;
+
             console.log("data from onSubmit", data);
-            
 
             setFormData(data);
             setShowMessage(true);
 
-            props.item.name = data.name;
-
+//            props.item.name = data.name;
             const listItemDto = {
                 // userName: data.userName,
-                name: data.name,
+                id: props.item.id,
+                name: props.item.name,
                 // email: data.email,
                 // isActive: data.isActive,
                 // password: userPassword
@@ -101,29 +104,33 @@ const ProjectDetailView = (props) => {
             switch (props.mode) {
                 case "ADD":
                     // const insertResponse = await insertItem(entityName, props.item); // .then(response => {
+                    listItemDto.id = 0;
 
-                    const param = {}
-                    param.id = 0;
-                    param.name = props.item.name;
-                    
-                    updateProject({variables: {project: param} });
-                    props.item = data;                    
+                    updateProject({variables: { project: listItemDto } });
+                    // props.item = data;                    
                     
                     //console.log("response from onSubmit", insertResponse);
                     console.log("response from updateProject", data);
                     // });
                     break;
                 case "UPDATE":
+
+                    updateProject({variables: { project: listItemDto } });
                     
-                    const updateResponse = await updateItem(entityName, props.item); // .then(response => {
-                    console.log("response from onSubmit", updateResponse);
+                    // const updateResponse = await updateItem(entityName, props.item); // .then(response => {
+                    // console.log("response from onSubmit", data);
                     // });
                     break;
+
                 case "DELETE":
-                    const deleteResponse = await deleteItem(entityName, props.item); //.then(response => {
-                    console.log("response from onSubmit", deleteResponse);
+                    
+                    updateProject({ variables: { project: listItemDto } });
+                
+//                    const deleteResponse = await deleteItem(entityName, props.item); //.then(response => {
+                    // console.log("response from onSubmit", data);
                     //});
                     break;                    
+
                 case "VIEW":
                     return true;
                     break;
@@ -132,7 +139,7 @@ const ProjectDetailView = (props) => {
             formik.resetForm();
             // setUserPassword("");
 
-            props.getList();
+            // props.refetch();
 
         }
     });
