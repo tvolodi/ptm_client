@@ -26,16 +26,16 @@ import RequireAuth from './components/user-profile/RequireAuth';
 
 var g_IsLogged = false;
 
-function App() {
+function App () {
   return (
-    <LayoutProvider>      
-        {/* <AuthProvider>             */}
-            <div className="App">
-                {/* <p>App.js</p> */}
-                {/* <RouterProvider router={router}> </RouterProvider> */}
-                <AppLayout></AppLayout>
-            </div>        
-        {/* </AuthProvider>   */}
+    <LayoutProvider>
+      <AuthProvider>
+        <div className="App">
+          <p>App.js</p>
+          {/* <RouterProvider router={router}> </RouterProvider> */}
+          <AppLayout></AppLayout>
+        </div>
+      </AuthProvider>
     </LayoutProvider>
   );
 }

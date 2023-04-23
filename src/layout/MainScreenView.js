@@ -3,9 +3,11 @@ import ProjectsView from "../components/projects/ProjectsView";
 import UserLoginView from "../components/user-profile/UserLoginView";
 import UsersView from "../components/users/UsersView";
 import WorkTasksView from "../components/work-tasks/WorkTasksView";
+import DataDesignerView from "../components/entity-manager/DataDesignerView";
 import Layout from "./Layout";
 
 import useMainViewContext from "./MainViewContext";
+import DictionariesView from "../components/entity-manager/DictionariesView";
 
 const MainScreenView = () => {
 
@@ -18,6 +20,18 @@ const MainScreenView = () => {
     let result = null;
 
     switch (currentView) {
+        case 'data-designer':
+            result = (
+                <DataDesignerView></DataDesignerView>
+            );
+            break;
+
+        case 'data-dictionaries':
+            result = (
+                <DictionariesView></DictionariesView>
+            );
+            break;
+
         case 'login':
             result = (
                 <UserLoginView></UserLoginView>

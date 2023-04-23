@@ -21,7 +21,7 @@ import axiosClient, { doAxiosRequest } from "../services/axios_client";
 
 const AppTopbar = () => {
 
-    const { onAppSideMenuToggle} = useContext(LayoutContext);
+    const { onAppSideMenuToggle } = useContext(LayoutContext);
 
     const mainViewContext = useMainViewContext();
 
@@ -32,9 +32,10 @@ const AppTopbar = () => {
     // const navigate = useNavigate();
 
     const setMainViewContent = (viewName) => {
+        console.log("viewName", viewName)
         mainViewContext.setMainViewState((prev) => {
             return {
-                ...prev, 
+                ...prev,
                 currentView: viewName,
             }
         });
@@ -43,14 +44,14 @@ const AppTopbar = () => {
     const leftBarSide = (
         <>
             <Button label="Menu" icon="pi pi-bars" className="mr-2" onClick={onAppSideMenuToggle}></Button>
-            <Button label="Home" icon="pi pi-home" className="mr-2"/>
+            <Button label="Home" icon="pi pi-home" className="mr-2" />
         </>
     );
 
     const rightBarSide = (
         <>
-            <Button label="Check login" className="mr-2" onClick={getMyProfile}/>
-            <Button label="Login" icon="pi pi-user" className="mr-2" onClick={logIn}/>
+            <Button label="Check login" className="mr-2" onClick={getMyProfile} />
+            <Button label="Login" icon="pi pi-user" className="mr-2" onClick={logIn} />
         </>
     );
 
@@ -78,31 +79,30 @@ const AppTopbar = () => {
             icon: 'tasks-icon',
             command: (event) => setMainViewContent("work-tasks"),
         },
-        {
-            label: 'Dictionaries',
-            icon: 'pi pi-fw pi-database',
-            items: [
-                {
-                    label: 'Users',
-                    icon: 'pi pi-fw pi-users',
-                    command: (event) => {
-                        setMainViewContent("users");
-                        // navigate("/users")
-                    },
-                },
-            ]
-        },
+        // {
+        //     label: 'Dictionaries',
+        //     icon: 'pi pi-fw pi-database',
+        //     items: [
+        //         {
+        //             label: 'Users',
+        //             icon: 'pi pi-fw pi-users',
+        //             command: (event) => {
+        //                 setMainViewContent("users");
+        //                 // navigate("/users")
+        //             },
+        //         },
+        //     ]
+        // },
         {
             label: 'Profile',
             icon: 'pi pi-fw pi-user',
-            items:[
+            items: [
                 {
                     label: 'Edit Profile',
                     icon: 'pi pi-fw pi-user-edit',
                     command: async (event) => {
                         await getMyProfile();
                     }
-
                 },
                 {
                     label: 'Login',
@@ -124,7 +124,31 @@ const AppTopbar = () => {
                     }
                 }
             ]
-        }
+        },
+        {
+            label: "Data Manager",
+            icon: 'pi pi-fw pi-database',
+            items: [
+                {
+                    icon: "pi pi-copy",
+                    label: "Dictionaries",
+                    command: async (event) => {
+                        setMainViewContent("data-dictionaries");
+                    },
+                },
+                {
+                    icon: "pi pi-wrench",
+                    label: "Designer",
+                    command: async (event) => {
+                        setMainViewContent("data-designer");
+                    },
+                },
+
+            ],
+
+
+
+        },
     ]
 
     const menuEndPart = (
@@ -139,13 +163,13 @@ const AppTopbar = () => {
 
     let loginName = '';
 
-    return(
+    return (
         <div className="layout-topbar">
             {/* <span>Test</span> */}
-            
+
             {/* <Toolbar left={leftBarSide} right = {rightBarSide}></Toolbar> */}
             <Menubar model={menuItems} ></Menubar>
-            
+
             {/* <OverlayPanel ref={loginPanelRef} showCloseIcon position="top-right">
                 <InputText label='Login' value={loginName}></InputText>
                 <InputText label='Login' value={loginName}></InputText>

@@ -1,5 +1,5 @@
 {
 	"plugins": [
-		"relay"
+		["relay", {"artifactDirectory": "./__generated__/relay"}]
 	]
 }
