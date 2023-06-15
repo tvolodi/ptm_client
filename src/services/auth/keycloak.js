@@ -1,6 +1,6 @@
 import Keycloak from "keycloak-js";
 
-import { setLocalServiceTokens } from "../local-services/local-services";
+// import { setLocalServiceTokens } from "../local-services/local-services";
 
 const keycloakInstance = new Keycloak();
 
@@ -16,10 +16,11 @@ const Login = (onAuthenticatedCallback) => {
         .init({onLoad: 'login-required'})
         .then(function (authenticated) {
             authenticated ? onAuthenticatedCallback() : alert("non authenticated");
-            setLocalServiceTokens(keycloakInstance.token, keycloakInstance.refreshToken);
+            // setLocalServiceTokens(keycloakInstance.token, keycloakInstance.refreshToken);
         })
         .catch( (error) => {
             console.log(`keycloak init exception: ${error}`);
+            console.log("error", error)
         });
 }
 

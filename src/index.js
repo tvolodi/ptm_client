@@ -62,8 +62,7 @@ const renderApp = () =>
         <App />
     </React.StrictMode>
     );
-
-console.log("mark 2")    
+ 
 KeycloakService.CallLogin(renderApp);
 
 // If you want to start measuring performance in your app, pass a function

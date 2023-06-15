@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Outlet, useLocation } from "react-router";
 // import AuthStatus from "../components/user-profile/AuthStatus__";
 import { MainViewContextProvider } from "./MainViewContext";

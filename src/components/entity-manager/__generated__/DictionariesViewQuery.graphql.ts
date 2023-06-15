@@ -1,51 +1,67 @@
 /**
- * @generated SignedSource<<8ccb9e971c085b0810ddb032a1edf34d>>
- * @flow
+ * @generated SignedSource<<159f760aa582089130e101ce7848ab5a>>
  * @lightSyntaxTransform
  * @nogrep
  */
 
+/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
-'use strict';
+import { ConcreteRequest, Query } from 'relay-runtime';
+export type DictionariesViewQuery$variables = {};
+export type DictionariesViewQuery$data = {
+  readonly domainEntities: {
+    readonly edges: ReadonlyArray<{
+      readonly cursor: string;
+      readonly node: {
+        readonly description: string | null;
+        readonly id: string;
+        readonly module: {
+          readonly code: string;
+          readonly id: string | null;
+          readonly name: string;
+        };
+        readonly name: string;
+      };
+    }> | null;
+    readonly pageInfo: {
+      readonly endCursor: string | null;
+      readonly hasNextPage: boolean;
+      readonly hasPreviousPage: boolean;
+      readonly startCursor: string | null;
+    };
+    readonly totalCount: number;
+  } | null;
+};
+export type DictionariesViewQuery = {
+  response: DictionariesViewQuery$data;
+  variables: DictionariesViewQuery$variables;
+};
 
-/*::
-import type { ConcreteRequest, Query } from 'relay-runtime';
-export type DictionariesViewQuery$variables = {||};
-export type DictionariesViewQuery$data = {|
-  +modules: ?{|
-    +edges: ?$ReadOnlyArray<{|
-      +cursor: string,
-      +node: {|
-        +code: string,
-        +id: ?string,
-        +name: string,
-      |},
-    |}>,
-    +pageInfo: {|
-      +endCursor: ?string,
-      +hasNextPage: boolean,
-      +hasPreviousPage: boolean,
-      +startCursor: ?string,
-    |},
-    +totalCount: number,
-  |},
-|};
-export type DictionariesViewQuery = {|
-  response: DictionariesViewQuery$data,
-  variables: DictionariesViewQuery$variables,
-|};
-*/
-
-var node/*: ConcreteRequest*/ = (function(){
-var v0 = [
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v2 = [
   {
     "alias": null,
     "args": [
       {
         "kind": "Literal",
         "name": "first",
-        "value": 10
+        "value": 100
       },
       {
         "kind": "Literal",
@@ -57,15 +73,15 @@ var v0 = [
         ]
       }
     ],
-    "concreteType": "ModulesConnection",
+    "concreteType": "DomainEntitiesConnection",
     "kind": "LinkedField",
-    "name": "modules",
+    "name": "domainEntities",
     "plural": false,
     "selections": [
       {
         "alias": null,
         "args": null,
-        "concreteType": "ModulesEdge",
+        "concreteType": "DomainEntitiesEdge",
         "kind": "LinkedField",
         "name": "edges",
         "plural": true,
@@ -80,30 +96,38 @@ var v0 = [
           {
             "alias": null,
             "args": null,
-            "concreteType": "Module",
+            "concreteType": "DomainEntity",
             "kind": "LinkedField",
             "name": "node",
             "plural": false,
             "selections": [
+              (v0/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "id",
+                "name": "description",
                 "storageKey": null
               },
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "code",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
+                "concreteType": "Module",
+                "kind": "LinkedField",
+                "name": "module",
+                "plural": false,
+                "selections": [
+                  (v0/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "code",
+                    "storageKey": null
+                  },
+                  (v1/*: any*/)
+                ],
                 "storageKey": null
               }
             ],
@@ -159,7 +183,7 @@ var v0 = [
         "storageKey": null
       }
     ],
-    "storageKey": "modules(first:10,order:[{\"name\":\"DESC\"}])"
+    "storageKey": "domainEntities(first:100,order:[{\"name\":\"DESC\"}])"
   }
 ];
 return {
@@ -168,7 +192,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "DictionariesViewQuery",
-    "selections": (v0/*: any*/),
+    "selections": (v2/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
@@ -177,22 +201,19 @@ return {
     "argumentDefinitions": [],
     "kind": "Operation",
     "name": "DictionariesViewQuery",
-    "selections": (v0/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "ba3312d7e3a7501ed8d3dfbde20ac2f9",
+    "cacheID": "055bc7b5b222794f1da150233f8015e8",
     "id": null,
     "metadata": {},
     "name": "DictionariesViewQuery",
     "operationKind": "query",
-    "text": "query DictionariesViewQuery {\n  modules(first: 10, order: [{name: DESC}]) {\n    edges {\n      cursor\n      node {\n        id\n        code\n        name\n      }\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    totalCount\n  }\n}\n"
+    "text": "query DictionariesViewQuery {\n  domainEntities(first: 100, order: [{name: DESC}]) {\n    edges {\n      cursor\n      node {\n        id\n        description\n        name\n        module {\n          id\n          code\n          name\n        }\n      }\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    totalCount\n  }\n}\n"
   }
 };
 })();
 
-(node/*: any*/).hash = "572ee57208a6824db12dde629fac3a69";
+(node as any).hash = "0e0077465ee0d8879864bbda9c9f6ee0";
 
-module.exports = ((node/*: any*/)/*: Query<
-  DictionariesViewQuery$variables,
-  DictionariesViewQuery$data,
->*/);
+export default node;

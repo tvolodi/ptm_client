@@ -1,0 +1,9 @@
+{
+  "realm": "ptm",
+  "auth-server-url": "https://www.vt-ptm.org:8443",
+  "ssl-required": "none",
+  "resource": "ptm-client",
+  "public-client": true,
+  "confidential-port": 0,
+  "checkLoginIframe": false
+}

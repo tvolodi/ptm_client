@@ -1,0 +1,936 @@
+"""
+The node interface is implemented by entities that have a global unique identifier.
+"""
+interface Node {
+  id: ID!
+}
+
+enum ApplyPolicy {
+  BEFORE_RESOLVER
+  AFTER_RESOLVER
+  VALIDATION
+}
+
+type Query {
+  """
+  Fetches an object given its ID.
+  """
+  node(
+    """
+    ID of the object.
+    """
+    id: ID!
+  ): Node
+
+  """
+  Lookup nodes by a list of IDs.
+  """
+  nodes(
+    """
+    The list of node IDs.
+    """
+    ids: [ID!]!
+  ): [Node]!
+  baseEntities(
+    entityName: String!
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+    where: BaseEntityFilterInput
+    order: [BaseEntitySortInput!]
+  ): BaseEntitiesConnection
+  dataTypes(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+    where: DataTypeFilterInput
+    order: [DataTypeSortInput!]
+  ): DataTypesConnection
+  modules(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+    where: ModuleFilterInput
+    order: [ModuleSortInput!]
+  ): ModulesConnection
+  domainEntities(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+    where: DomainEntityFilterInput
+    order: [DomainEntitySortInput!]
+  ): DomainEntitiesConnection
+  domainEntityAttributes(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+    where: DomainEntityAttributeFilterInput
+    order: [DomainEntityAttributeSortInput!]
+  ): DomainEntityAttributesConnection
+  projects(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+    where: ProjectFilterInput
+    order: [ProjectSortInput!]
+  ): ProjectsConnection
+  workTasks(
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+  ): WorkTasksConnection
+}
+
+type Mutation {
+  datatype(input: DatatypeInput!): DatatypePayload!
+  module(module: ModuleInput!): ModulePayload!
+  domainEntity(domainEntity: DomainEntityInput!): DomainEntityPayload!
+  domainEntityAttribute(
+    genericDomainEntityObject: DomainEntityAttributeInput!
+  ): DomainEntityAttributePayload!
+  project(project: ProjectInput!): ProjectPayload!
+  workTask(workTask: WorkTaskInput!): WorkTaskPayload!
+  systemConfig(systemConfig: SystemConfigInput!): SystemConfigPayload!
+}
+
+input BaseEntityFilterInput {
+  and: [BaseEntityFilterInput!]
+  or: [BaseEntityFilterInput!]
+  id: IdOperationFilterInput
+  name: StringOperationFilterInput
+  creationDateTime: DateTimeOperationFilterInput
+  updateDateTime: DateTimeOperationFilterInput
+  deleteDateTime: DateTimeOperationFilterInput
+  isDeleted: BooleanOperationFilterInput
+}
+
+input BaseEntitySortInput {
+  id: SortEnumType
+  name: SortEnumType
+  creationDateTime: SortEnumType
+  updateDateTime: SortEnumType
+  deleteDateTime: SortEnumType
+  isDeleted: SortEnumType
+}
+
+input DataTypeFilterInput {
+  and: [DataTypeFilterInput!]
+  or: [DataTypeFilterInput!]
+  code: StringOperationFilterInput
+  id: IdOperationFilterInput
+  name: StringOperationFilterInput
+  creationDateTime: DateTimeOperationFilterInput
+  updateDateTime: DateTimeOperationFilterInput
+  deleteDateTime: DateTimeOperationFilterInput
+  isDeleted: BooleanOperationFilterInput
+}
+
+input DataTypeSortInput {
+  code: SortEnumType
+  id: SortEnumType
+  name: SortEnumType
+  creationDateTime: SortEnumType
+  updateDateTime: SortEnumType
+  deleteDateTime: SortEnumType
+  isDeleted: SortEnumType
+}
+
+input ModuleFilterInput {
+  and: [ModuleFilterInput!]
+  or: [ModuleFilterInput!]
+  code: StringOperationFilterInput
+  domainEntities: ListFilterInputTypeOfDomainEntityFilterInput
+  id: IdOperationFilterInput
+  name: StringOperationFilterInput
+  creationDateTime: DateTimeOperationFilterInput
+  updateDateTime: DateTimeOperationFilterInput
+  deleteDateTime: DateTimeOperationFilterInput
+  isDeleted: BooleanOperationFilterInput
+}
+
+input ModuleSortInput {
+  code: SortEnumType
+  id: SortEnumType
+  name: SortEnumType
+  creationDateTime: SortEnumType
+  updateDateTime: SortEnumType
+  deleteDateTime: SortEnumType
+  isDeleted: SortEnumType
+}
+
+input DomainEntityFilterInput {
+  and: [DomainEntityFilterInput!]
+  or: [DomainEntityFilterInput!]
+  description: StringOperationFilterInput
+  module: ModuleFilterInput
+  attributes: ListFilterInputTypeOfDomainEntityAttributeFilterInput
+  id: IdOperationFilterInput
+  name: StringOperationFilterInput
+  creationDateTime: DateTimeOperationFilterInput
+  updateDateTime: DateTimeOperationFilterInput
+  deleteDateTime: DateTimeOperationFilterInput
+  isDeleted: BooleanOperationFilterInput
+}
+
+input DomainEntitySortInput {
+  description: SortEnumType
+  module: ModuleSortInput
+  id: SortEnumType
+  name: SortEnumType
+  creationDateTime: SortEnumType
+  updateDateTime: SortEnumType
+  deleteDateTime: SortEnumType
+  isDeleted: SortEnumType
+}
+
+input DomainEntityAttributeFilterInput {
+  and: [DomainEntityAttributeFilterInput!]
+  or: [DomainEntityAttributeFilterInput!]
+  description: StringOperationFilterInput
+  domainEntity: DomainEntityFilterInput
+  dataType: DataTypeFilterInput
+  isNullable: BooleanOperationFilterInput
+  hasIndex: BooleanOperationFilterInput
+  entityLinkName: StringOperationFilterInput
+  id: IdOperationFilterInput
+  name: StringOperationFilterInput
+  creationDateTime: DateTimeOperationFilterInput
+  updateDateTime: DateTimeOperationFilterInput
+  deleteDateTime: DateTimeOperationFilterInput
+  isDeleted: BooleanOperationFilterInput
+}
+
+input DomainEntityAttributeSortInput {
+  description: SortEnumType
+  domainEntity: DomainEntitySortInput
+  dataType: DataTypeSortInput
+  isNullable: SortEnumType
+  hasIndex: SortEnumType
+  entityLinkName: SortEnumType
+  id: SortEnumType
+  name: SortEnumType
+  creationDateTime: SortEnumType
+  updateDateTime: SortEnumType
+  deleteDateTime: SortEnumType
+  isDeleted: SortEnumType
+}
+
+input ProjectFilterInput {
+  and: [ProjectFilterInput!]
+  or: [ProjectFilterInput!]
+  id: IdOperationFilterInput
+  name: StringOperationFilterInput
+  creationDateTime: DateTimeOperationFilterInput
+  updateDateTime: DateTimeOperationFilterInput
+  deleteDateTime: DateTimeOperationFilterInput
+  isDeleted: BooleanOperationFilterInput
+}
+
+input ProjectSortInput {
+  id: SortEnumType
+  name: SortEnumType
+  creationDateTime: SortEnumType
+  updateDateTime: SortEnumType
+  deleteDateTime: SortEnumType
+  isDeleted: SortEnumType
+}
+
+"""
+A connection to a list of items.
+"""
+type BaseEntitiesConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [BaseEntitiesEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [BaseEntity!]
+
+  """
+  Identifies the total count of items in the connection.
+  """
+  totalCount: Int!
+}
+
+"""
+A connection to a list of items.
+"""
+type DataTypesConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [DataTypesEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [DataType!]
+
+  """
+  Identifies the total count of items in the connection.
+  """
+  totalCount: Int!
+}
+
+"""
+A connection to a list of items.
+"""
+type ModulesConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [ModulesEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [Module!]
+
+  """
+  Identifies the total count of items in the connection.
+  """
+  totalCount: Int!
+}
+
+"""
+A connection to a list of items.
+"""
+type DomainEntitiesConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [DomainEntitiesEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [DomainEntity!]
+
+  """
+  Identifies the total count of items in the connection.
+  """
+  totalCount: Int!
+}
+
+"""
+A connection to a list of items.
+"""
+type DomainEntityAttributesConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [DomainEntityAttributesEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [DomainEntityAttribute!]
+
+  """
+  Identifies the total count of items in the connection.
+  """
+  totalCount: Int!
+}
+
+"""
+A connection to a list of items.
+"""
+type ProjectsConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [ProjectsEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [Project!]
+
+  """
+  Identifies the total count of items in the connection.
+  """
+  totalCount: Int!
+}
+
+"""
+A connection to a list of items.
+"""
+type WorkTasksConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+
+  """
+  A list of edges.
+  """
+  edges: [WorkTasksEdge!]
+
+  """
+  A flattened list of the nodes.
+  """
+  nodes: [WorkTask!]
+
+  """
+  Identifies the total count of items in the connection.
+  """
+  totalCount: Int!
+}
+
+input IdOperationFilterInput {
+  eq: ID
+  neq: ID
+  in: [ID]
+  nin: [ID]
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input DateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime]
+  nin: [DateTime]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+
+input BooleanOperationFilterInput {
+  eq: Boolean
+  neq: Boolean
+}
+
+enum SortEnumType {
+  ASC
+  DESC
+}
+
+input ListFilterInputTypeOfDomainEntityFilterInput {
+  all: DomainEntityFilterInput
+  none: DomainEntityFilterInput
+  some: DomainEntityFilterInput
+  any: Boolean
+}
+
+input ListFilterInputTypeOfDomainEntityAttributeFilterInput {
+  all: DomainEntityAttributeFilterInput
+  none: DomainEntityAttributeFilterInput
+  some: DomainEntityAttributeFilterInput
+  any: Boolean
+}
+
+"""
+Information about pagination in a connection.
+"""
+type PageInfo {
+  """
+  Indicates whether more edges exist following the set defined by the clients arguments.
+  """
+  hasNextPage: Boolean!
+
+  """
+  Indicates whether more edges exist prior the set defined by the clients arguments.
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  When paginating backwards, the cursor to continue.
+  """
+  startCursor: String
+
+  """
+  When paginating forwards, the cursor to continue.
+  """
+  endCursor: String
+}
+
+type BaseEntity {
+  id: ID
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+"""
+An edge in a connection.
+"""
+type BaseEntitiesEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: BaseEntity!
+}
+
+type DataType {
+  code: String!
+  id: ID
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+"""
+An edge in a connection.
+"""
+type DataTypesEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: DataType!
+}
+
+type Module {
+  code: String!
+  domainEntities: [DomainEntity!]
+  id: ID
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+"""
+An edge in a connection.
+"""
+type ModulesEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: Module!
+}
+
+type DomainEntity implements Node {
+  description: String
+  module: Module!
+  attributes: [DomainEntityAttribute!]
+  id: ID!
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+"""
+An edge in a connection.
+"""
+type DomainEntitiesEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: DomainEntity!
+}
+
+type DomainEntityAttribute implements Node {
+  description: String
+  domainEntity: DomainEntity!
+  dataType: DataType!
+  isNullable: Boolean!
+  hasIndex: Boolean!
+  entityLinkName: String!
+  id: ID!
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+"""
+An edge in a connection.
+"""
+type DomainEntityAttributesEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: DomainEntityAttribute!
+}
+
+type Project implements Node {
+  id: ID!
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+"""
+An edge in a connection.
+"""
+type ProjectsEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: Project!
+}
+
+type WorkTask implements Node {
+  description: String
+  project: Project
+  projectId: Long
+  id: ID!
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+"""
+An edge in a connection.
+"""
+type WorkTasksEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: WorkTask!
+}
+
+"""
+The `DateTime` scalar represents an ISO-8601 compliant date time type.
+"""
+scalar DateTime
+
+input DataTypeInput {
+  code: String!
+  id: ID
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+input ModuleInput {
+  code: String!
+  domainEntities: [DomainEntityInput!]
+  id: ID
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+input DomainEntityInput {
+  description: String
+  module: ModuleInput!
+  attributes: [DomainEntityAttributeInput!]
+  id: ID
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+input DomainEntityAttributeInput {
+  description: String
+  domainEntity: DomainEntityInput!
+  dataType: DataTypeInput!
+  isNullable: Boolean!
+  hasIndex: Boolean!
+  entityLinkName: String!
+  id: ID
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+input ProjectInput {
+  id: ID
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+input WorkTaskInput {
+  description: String
+  project: ProjectInput
+  projectId: Long
+  id: ID
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+type SystemConfig {
+  description: String
+  settings: [KeyValuePairOfStringAndString!]
+  id: ID
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+input SystemConfigInput {
+  description: String
+  settings: [KeyValuePairOfStringAndStringInput!]
+  id: ID
+  name: String!
+  creationDateTime: DateTime
+  updateDateTime: DateTime
+  deleteDateTime: DateTime
+  isDeleted: Boolean
+}
+
+input KeyValuePairOfStringAndStringInput {
+  key: String!
+  value: String!
+}
+
+type KeyValuePairOfStringAndString {
+  key: String!
+  value: String!
+}
+
+input DatatypeInput {
+  genericDomainEntityObject: DataTypeInput!
+}
+
+type DatatypePayload {
+  dataType: DataType
+}
+
+type ModulePayload {
+  module: Module
+}
+
+type DomainEntityPayload {
+  domainEntity: DomainEntity
+}
+
+type DomainEntityAttributePayload {
+  domainEntityAttribute: DomainEntityAttribute
+}
+
+type ProjectPayload {
+  project: Project
+}
+
+type WorkTaskPayload {
+  workTask: WorkTask
+}
+
+type SystemConfigPayload {
+  systemConfig: SystemConfig
+}

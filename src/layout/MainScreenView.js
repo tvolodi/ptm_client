@@ -3,8 +3,7 @@ import ProjectsView from "../components/projects/ProjectsView";
 import UserLoginView from "../components/user-profile/UserLoginView";
 import UsersView from "../components/users/UsersView";
 import WorkTasksView from "../components/work-tasks/WorkTasksView";
-import DataDesignerView from "../components/entity-manager/DataDesignerView";
-import Layout from "./Layout";
+import DataDesignerView from "../components/entity-manager/data-designer/DataDesignerView";
 
 import useMainViewContext from "./MainViewContext";
 import DictionariesView from "../components/entity-manager/DictionariesView";
@@ -12,8 +11,6 @@ import DictionariesView from "../components/entity-manager/DictionariesView";
 const MainScreenView = () => {
 
     const mainViewContext = useMainViewContext();
-
-    console.log("mainViewContext from MainScreenView", mainViewContext)
 
     const currentView = mainViewContext.mainViewState.currentView;
 
@@ -59,8 +56,6 @@ const MainScreenView = () => {
     }
 
     return result;
-
-
 }
 
 export default MainScreenView;

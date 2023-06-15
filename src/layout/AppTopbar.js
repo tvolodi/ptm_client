@@ -1,23 +1,15 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useRef } from "react";
 
 import { LayoutContext } from "./LayoutContext";
 
 import { Button } from 'primereact/button';
-import { InputText } from "primereact/inputtext";
 import { Menu } from 'primereact/menu';
 import { Menubar } from 'primereact/menubar';
-import { OverlayPanel } from 'primereact/overlaypanel';
-import { Toolbar } from 'primereact/toolbar';
-
-import logIn, { getMyProfile } from "../services/auth/auth";
-import { checkLogin, logOut } from "../services/auth/auth";
 
 import KeycloakService from "../services/auth/keycloak";
 
 import './AppTopbar.css';
 import useMainViewContext from "./MainViewContext";
-import axiosClient, { doAxiosRequest } from "../services/axios_client";
 
 const AppTopbar = () => {
 
@@ -25,14 +17,10 @@ const AppTopbar = () => {
 
     const mainViewContext = useMainViewContext();
 
-
     const menuRef = useRef(null);
-    const loginPanelRef = useRef(null);
-
-    // const navigate = useNavigate();
-
+    
     const setMainViewContent = (viewName) => {
-        console.log("viewName", viewName)
+
         mainViewContext.setMainViewState((prev) => {
             return {
                 ...prev,
@@ -48,12 +36,6 @@ const AppTopbar = () => {
         </>
     );
 
-    const rightBarSide = (
-        <>
-            <Button label="Check login" className="mr-2" onClick={getMyProfile} />
-            <Button label="Login" icon="pi pi-user" className="mr-2" onClick={logIn} />
-        </>
-    );
 
     const menuEndPartModel = [
         {
@@ -68,9 +50,7 @@ const AppTopbar = () => {
         {
             label: 'Projects',
             command: (event) => {
-                console.log("Projects button pressed");
                 setMainViewContent("projects")
-                // navigate("/projects")
             },
             icon: 'project-icon',
         },
@@ -79,20 +59,6 @@ const AppTopbar = () => {
             icon: 'tasks-icon',
             command: (event) => setMainViewContent("work-tasks"),
         },
-        // {
-        //     label: 'Dictionaries',
-        //     icon: 'pi pi-fw pi-database',
-        //     items: [
-        //         {
-        //             label: 'Users',
-        //             icon: 'pi pi-fw pi-users',
-        //             command: (event) => {
-        //                 setMainViewContent("users");
-        //                 // navigate("/users")
-        //             },
-        //         },
-        //     ]
-        // },
         {
             label: 'Profile',
             icon: 'pi pi-fw pi-user',
@@ -101,26 +67,13 @@ const AppTopbar = () => {
                     label: 'Edit Profile',
                     icon: 'pi pi-fw pi-user-edit',
                     command: async (event) => {
-                        await getMyProfile();
-                    }
-                },
-                {
-                    label: 'Login',
-                    command: async (event) => {
-                        setMainViewContent("login");
-                        // await logIn();
-                        // loginPanelRef.current.toggle(event);
-                        // navigate("/user-login");
+                        // await getMyProfile();
                     }
                 },
                 {
                     label: 'Logout',
                     command: async (event) => {
                         KeycloakService.CallLogout();
-
-                        // await logOut();
-                        // setMainViewContent("login");
-                        // navigate("/");
                     }
                 }
             ]

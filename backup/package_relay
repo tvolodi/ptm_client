@@ -1,0 +1,6 @@
+  "relay": {
+    "language": "flow",
+    "src": "./src",
+    "artifactDirectory": "./__generated__/relay",
+    "schema": "./src/schema/app_schema.graphql"
+  },

@@ -21,6 +21,9 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { createBrowserRouter, RouterProvider, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './layout/ProtectedRoute';
 import RequireAuth from './components/user-profile/RequireAuth';
+import environment from './contexts/graphql-environment';
+
+import { RelayEnvironmentProvider } from 'react-relay';
 
 
 
@@ -30,11 +33,12 @@ function App () {
   return (
     <LayoutProvider>
       <AuthProvider>
-        <div className="App">
-          <p>App.js</p>
-          {/* <RouterProvider router={router}> </RouterProvider> */}
-          <AppLayout></AppLayout>
-        </div>
+        <RelayEnvironmentProvider environment={environment}>
+          <div className="App">
+            {/* <RouterProvider router={router}> </RouterProvider> */}
+            <AppLayout></AppLayout>
+          </div>
+        </RelayEnvironmentProvider>
       </AuthProvider>
     </LayoutProvider>
   );
