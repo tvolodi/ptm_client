@@ -88,12 +88,19 @@ export const DataDesignerViewDataTypesQuery = graphql`
 `;
 
 
-const DataDesignerView = () => {
+/**
+ * 
+ * @param {*} params 
+ * params.data - query reference from routing
+ * @returns 
+ */
+const DataDesignerView = (params) => {
+    console.log("DataDesignerView.params", params)
     
     // Main entity list query loader definition.
     // Using global variable for repeating call query. Can be null at beginning.
-    const [entityListQueryRef, entityListLoadQuery] = useQueryLoader(DataDesignerViewEntitiesQuery, g_query_vars.domainEntityQueryRef)
-    g_query_vars.domainEntityQueryRef = entityListQueryRef;
+    const [entityListQueryRef, entityListLoadQuery] = useQueryLoader(DataDesignerViewEntitiesQuery, params.data) // g_query_vars.domainEntityQueryRef
+    // g_query_vars.domainEntityQueryRef = entityListQueryRef;
     
     // TODO: Query loader for dropdown. Consider to move down by component tree.
     const [moduleListQueryRef, loadModuleListQuery] = useQueryLoader(DataDesignerViewModulesQuery,);
@@ -119,7 +126,7 @@ const DataDesignerView = () => {
             {/* <p>{toUpdateData}</p> */}
             <Suspense>
             <ShowChildrenViews 
-                entityListQueryRef={entityListQueryRef}
+                        entityListQueryRef={params.data} //entityListQueryRef}
                 moduleListQueryRef={moduleListQueryRef}
                 dataTypeListQueryRef={dataTypeListQueryRef}
                 refreshEntityList={refreshEntityList}

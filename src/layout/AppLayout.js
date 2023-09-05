@@ -1,27 +1,23 @@
-import * as React from "react";
-import { Outlet, useLocation } from "react-router";
-// import AuthStatus from "../components/user-profile/AuthStatus__";
-import { MainViewContextProvider } from "./MainViewContext";
-import Layout from "./Layout";
+// import * as React from "react";
+// import { MainViewContextProvider } from "./MainViewContext";
+// import Layout from "./Layout";
+// import AppTopbar from "./AppTopbar";
+// import AppSidebar from "./AppSidebar";
 
-const AppLayout = () => {
+// const AppLayout = (props) => {
 
-    return(
-        <>
-            {/* <p>AppLayout</p> */}
+//     return(
+//         <>
+//             <p>AppLayout</p>
+//             <p>{JSON.stringify(props, null, " ")}</p>
+//             <div>children: {JSON.stringify(props.children, null, "\t")}</div>
+//             <MainViewContextProvider>
+//                 <AppTopbar></AppTopbar>
+//                 <AppSidebar visible={true}></AppSidebar>
+//                 {/* <Layout>{props.children}</Layout> */}
+//             </MainViewContextProvider>
+//         </>
+//     );
+// }
 
-            {/* <AuthStatus></AuthStatus> */}
-
-            {/* <p>Layout from AppLayout</p> */}
-            <MainViewContextProvider>
-                <Layout></Layout>
-            </MainViewContextProvider>
-
-            {/* <Outlet></Outlet> */}
-
-        </>
-
-    );
-}
-
-export default AppLayout;
+// export default AppLayout;

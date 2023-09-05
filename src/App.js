@@ -9,6 +9,7 @@ import UsersView from './components/users/UsersView';
 
 
 import AppTopbar from './layout/AppTopbar';
+import AppSidebar from './layout/AppSidebar';
 
 import { LayoutProvider } from './layout/LayoutContext';
 import { AuthProvider } from './contexts/AuthContextProvider';
@@ -19,27 +20,24 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 import { createBrowserRouter, RouterProvider, Route, Routes } from 'react-router-dom';
-import ProtectedRoute from './layout/ProtectedRoute';
+// import ProtectedRoute from './layout/ProtectedRoute';
 import RequireAuth from './components/user-profile/RequireAuth';
-import environment from './contexts/graphql-environment';
-
+import RelayEnvironment from './contexts/graphql-environment';
 import { RelayEnvironmentProvider } from 'react-relay';
+import { MainViewContextProvider } from './layout/MainViewContext';
 
-
-
-var g_IsLogged = false;
-
-function App () {
+const App = (props) => {
   return (
-    <LayoutProvider>
-      <AuthProvider>
-        <RelayEnvironmentProvider environment={environment}>
+    <LayoutProvider>      
+        <RelayEnvironmentProvider environment={RelayEnvironment}>
           <div className="App">
-            {/* <RouterProvider router={router}> </RouterProvider> */}
-            <AppLayout></AppLayout>
+            <MainViewContextProvider>
+              <AppTopbar></AppTopbar>
+              <AppSidebar visible={true}></AppSidebar>
+              {props.children}
+            </MainViewContextProvider>
           </div>
         </RelayEnvironmentProvider>
-      </AuthProvider>
     </LayoutProvider>
   );
 }

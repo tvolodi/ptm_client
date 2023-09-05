@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useCallback, useContext, useRef } from "react";
 
 import { LayoutContext } from "./LayoutContext";
 
@@ -11,9 +11,13 @@ import KeycloakService from "../services/auth/keycloak";
 import './AppTopbar.css';
 import useMainViewContext from "./MainViewContext";
 
+import { useRouter } from "found";
+
 const AppTopbar = () => {
 
+    const { match, router } = useRouter();
     const { onAppSideMenuToggle } = useContext(LayoutContext);
+
 
     const mainViewContext = useMainViewContext();
 
@@ -93,7 +97,9 @@ const AppTopbar = () => {
                     icon: "pi pi-wrench",
                     label: "Designer",
                     command: async (event) => {
-                        setMainViewContent("data-designer");
+                        // setMainViewContent("data-designer");                        
+                        router.replace("/designer");
+                        
                     },
                 },
 

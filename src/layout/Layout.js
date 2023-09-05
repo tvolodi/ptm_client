@@ -1,32 +1,32 @@
-import React, { useContext, useEffect } from "react";
-import { Outlet, Link } from "react-router-dom";
+// import React, { useContext, useEffect } from "react";
+// import { Outlet, Link } from "react-router-dom";
 
-import { OverlayPanel } from 'primereact/overlaypanel';
+// import { OverlayPanel } from 'primereact/overlaypanel';
 
-import AppSidebar from "./AppSidebar";
-import AppTopbar from "./AppTopbar";
-import ProjectsView from "../components/projects/ProjectsView";
-import UserLoginView from "../components/user-profile/UserLoginView";
-import { AuthContext } from "../hooks/AuthContext";
-import { getMyProfile } from "../services/auth/auth";
-import MainScreenView from "./MainScreenView";
-import { MainViewContextProvider} from "./MainViewContext";
+// import AppSidebar from "./AppSidebar";
+// import AppTopbar from "./AppTopbar";
+// import ProjectsView from "../components/projects/ProjectsView";
+// import UserLoginView from "../components/user-profile/UserLoginView";
+// import { AuthContext } from "../hooks/AuthContext";
+// import { getMyProfile } from "../services/auth/auth";
+// import MainScreenView from "./MainScreenView";
+// import { MainViewContextProvider} from "./MainViewContext";
 
-const Layout = (props) => {
+// const Layout = (props) => {
 
-    const isAppSidebarVisible = true;
+//     const isAppSidebarVisible = true;
 
-    return (
-        <>
-        {/* <p>Layout</p> */}
+//     return (
+//         <>
+//             <p>Layout</p>
+//             <p>{JSON.stringify(props, null, " ")}</p>
+//             <div>children: {JSON.stringify(props.children, null, "\t")}</div>
+//             <AppTopbar></AppTopbar>
+//             <AppSidebar visible={isAppSidebarVisible}></AppSidebar>            
+//             <MainScreenView>{props.children}</MainScreenView>
+//         </>
+//     );
 
-            <AppTopbar></AppTopbar>
-            <AppSidebar visible={isAppSidebarVisible}></AppSidebar>
+// };
 
-            <MainScreenView></MainScreenView>
-        </>
-    );
-
-};
-
-export default Layout;
+// export default Layout;

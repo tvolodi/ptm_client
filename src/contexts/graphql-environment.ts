@@ -26,9 +26,9 @@ async function fetchQraphQL(params: RequestParameters, variables: Variables){
     return result;
 };
 
-const environment = new Environment({
+const RelayEnvironment = new Environment({
     network: Network.create(fetchQraphQL),
-    store: new Store(new RecordSource()),
+    store: new Store(new RecordSource(), {gcReleaseBufferSize: 20},),
 });
 
-export default environment;
+export default RelayEnvironment;

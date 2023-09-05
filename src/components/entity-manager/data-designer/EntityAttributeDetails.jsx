@@ -90,7 +90,7 @@ const EntityAttributeDetails = (params) => {
     }
     
     let selectedItem = {};
-
+    // Copy the selected in list item to local variable
     Object.keys(params.secondarySelectedItemState)
         .forEach(propertyName => selectedItem[propertyName] = params.secondarySelectedItemState[propertyName]);
     selectedItem.domainEntity = params.entitySelectedItemState.node;
@@ -119,6 +119,8 @@ const EntityAttributeDetails = (params) => {
         onSubmit: values => {
 
             // setFormDataState(values);
+
+            console.log("Values on submit", values);
 
             Object.keys(values).forEach(propertyName => selectedItem[propertyName] = values[propertyName]);
 
